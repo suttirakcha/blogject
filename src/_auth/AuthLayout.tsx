@@ -1,7 +1,17 @@
-const AuthLayout = ({ children } : { children: React.ReactNode }) => {
+import { Outlet, Navigate } from "react-router-dom"
+
+const AuthLayout = () => {
+  const isAuthenticated = false
+
   return (
     <>
-      {children}
+      {isAuthenticated ? (
+        <Navigate to="/" />
+      ) : (
+        <section>
+          <Outlet />
+        </section>
+      )}
     </>
   )
 }
