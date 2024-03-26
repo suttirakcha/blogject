@@ -8,7 +8,7 @@ const AuthLayout = () => {
       {isAuthenticated ? (
         <Navigate to="/" />
       ) : (
-        <section>
+        <section className="m-auto max-w-2xl">
           <Outlet />
         </section>
       )}
