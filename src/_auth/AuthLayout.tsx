@@ -1,3 +1,4 @@
+import Logo from "@/components/logo"
 import { Outlet, Navigate } from "react-router-dom"
 
 const AuthLayout = () => {
@@ -9,6 +10,7 @@ const AuthLayout = () => {
         <Navigate to="/" />
       ) : (
         <section className="m-auto max-w-2xl">
+          <Logo />
           <Outlet />
         </section>
       )}

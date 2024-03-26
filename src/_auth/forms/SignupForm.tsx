@@ -14,21 +14,27 @@ import {
 import { Input } from "@/components/ui/input"
 import { signupSchema } from "@/lib/validation"
 import { Link } from "react-router-dom"
+import { createUserAccount } from "@/lib/api"
+import { useState } from "react"
 
 const SignupForm = () => {
+
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const form = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
-      name:"",
-      username: "",
+      name: "",
       email: "",
       password: ""
     },
   })
 
-  const onSubmit = (values: z.infer<typeof signupSchema>) => {
-    console.log(values)
+  const onSubmit = async (values: z.infer<typeof signupSchema>) => {
+    setIsSubmitting(true)
+    const newUser = await createUserAccount(values).then(() => setIsSubmitting(false))
+
+    return newUser
   }
 
   return (
@@ -44,20 +50,7 @@ const SignupForm = () => {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input className="bg-gray-600" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel className="text-base">Username</FormLabel>
               <FormControl>
                 <Input className="bg-gray-600" {...field} />
               </FormControl>
@@ -70,7 +63,7 @@ const SignupForm = () => {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel className="text-base">Email</FormLabel>
               <FormControl>
                 <Input className="bg-gray-600" {...field} />
               </FormControl>
@@ -83,7 +76,7 @@ const SignupForm = () => {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel className="text-base">Password</FormLabel>
               <FormControl>
                 <Input className="bg-gray-600" type="password" {...field} />
               </FormControl>
@@ -92,9 +85,11 @@ const SignupForm = () => {
           )}
         />
 
-        <div className="flex flex-col gap-y-3 items-center">
+        <div className="flex flex-col gap-y-4 items-center">
+          <Button type="submit" className="text-base bg-indigo-600 hover:bg-indigo-400 text-white" disabled={isSubmitting}>
+            {isSubmitting ? 'Creating...' : 'Create an account'}
+          </Button>
           <p className="text-gray-400">Already have an account? <Link to="/sign-in" className="text-indigo-400">Sign in</Link></p>
-          <Button type="submit">Create an account</Button>
         </div>
       </form>
     </Form>
