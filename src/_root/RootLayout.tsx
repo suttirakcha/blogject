@@ -1,20 +1,27 @@
 import { useEffect } from "react"
-import MainPage from "./pages/MainPage"
-import { useNavigate } from "react-router-dom"
+import { Outlet, useNavigate } from "react-router-dom"
+import Topbar from "@/components/topbar/index"
+import LeftSidebar from "@/components/left-sidebar"
 
 const RootLayout = () => {
 
   const navigate = useNavigate()
+  const cookieFallback = localStorage.getItem("cookieFallback")
 
   useEffect(() => {
-    if (localStorage.getItem("cookieFallback") === '[]' || localStorage.getItem("cookieFallback") === null){
+    if (cookieFallback === '[]' || cookieFallback === null){
       navigate('/sign-in')
     }
-  })
+  }, [cookieFallback])
 
   return (
     <>
-      <MainPage />
+      <Topbar />
+      <LeftSidebar />
+
+      <section className="mt-[84px] md:mt-0 p-5 md:ml-[320px]">
+        <Outlet />
+      </section>
     </>
   )
 }

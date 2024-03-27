@@ -12,9 +12,9 @@ const AuthLayout = () => {
       {isAuthenticated ? (
         <Navigate to="/" />
       ) : (
-        <section className="h-screen flex items-center justify-center">
-          <div className="w-full max-w-2xl">
-            <Logo />
+        <section className="h-screen flex flex-col gap-y-8 items-center justify-center">
+          <Logo />
+          <div className="w-full max-w-xl px-5">
             <Outlet />
             <Toaster />
           </div>

@@ -11,7 +11,7 @@ export async function createUserAccount(user: NewUser){
       user.name,
     )
 
-    if (!newAccount) throw new Error("Unknown User")
+    if (!newAccount) throw Error
 
     const avatarUrl = avatars.getInitials(user.name)
 
@@ -50,6 +50,16 @@ export async function saveUserToDB(user: UserToDB){
 export async function signInAccount(user: SignIn){
   try {
     const session = await account.createEmailSession(user.email, user.password)
+
+    return session
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export async function signOutAccount(){
+  try {
+    const session = await account.deleteSession("current")
 
     return session
   } catch (err) {

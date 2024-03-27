@@ -36,15 +36,22 @@ const SignupForm = () => {
 
     const isLoggedIn = await checkAuthUser()
 
-    if (!newUser) return toast({ title: "Failed to sign up, please try again." })
-    if (!session) return toast({ title: "Failed to sign in, please try again." })
+    if (!newUser) return toast({ 
+      title: "Failed to sign up, please try again." ,
+      variant: "destructive"
+    })
+    if (!session) return toast({ 
+      title: "Failed to sign in, please try again." ,
+      variant: "destructive"
+    })
 
     if (isLoggedIn){
       form.reset();
       navigate('/')
     } else {
       toast({
-        title: "Failed to sign up, please try again."
+        title: "Failed to sign up, please try again.",
+        variant: "destructive"
       })
     }
   }

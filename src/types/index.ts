@@ -20,7 +20,7 @@ export interface User {
   id: string
   name: string
   email: string
-  imageUrl: URL | string
+  imageUrl: string
   bio: string
 }
 

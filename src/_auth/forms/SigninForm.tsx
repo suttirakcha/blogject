@@ -32,14 +32,18 @@ const SigninForm = () => {
 
     const isLoggedIn = await checkAuthUser()
 
-    if (!session) return toast({ title: "Failed to sign in, please try again." })
+    if (!session) return toast({ 
+      title: "Email or password is incorrect, please try again.",
+      variant: "destructive"
+    })
 
     if (isLoggedIn){
       form.reset();
       navigate('/')
     } else {
       toast({
-        title: "Failed to sign up, please try again."
+        title: "Failed to sign in, please try again.",
+        variant: "destructive"
       })
     }
   }
@@ -80,8 +84,8 @@ const SigninForm = () => {
         />
 
         <div className="flex flex-col gap-y-4 items-center">
-          <Button type="submit" className="text-base bg-indigo-600 hover:bg-indigo-400 text-white" disabled={isUserLoading || isSigningIn}>
-            {isUserLoading || isSigningIn ? 'Signing in...' : 'Sign in'}
+          <Button type="submit" className="text-base bg-indigo-600 hover:bg-indigo-400 text-white" disabled={isSigningIn}>
+            {isSigningIn ? 'Signing in...' : 'Sign in'}
           </Button>
           <p className="text-gray-400">Don't have an account? <Link to="/sign-up" className="text-indigo-400">Sign up</Link></p>
         </div>
