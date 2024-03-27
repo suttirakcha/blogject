@@ -1,21 +1,26 @@
-import { LogOut } from "lucide-react"
+import { FileText, Home, LogOut, Users } from "lucide-react"
 import { ReactNode } from "react"
 
 interface Menus {
   title: string
   icon: ReactNode
+  link: string
 }
 
 export const mainMenus: Menus[] = [
   {
-    title:'Your posts',
-    icon:<LogOut />
-  }
-]
-
-export const signOutMenus: Menus[] = [
+    title:'Home',
+    icon:<Home />,
+    link:'/'
+  },
   {
-    title:'Sign out',
-    icon:<LogOut />
-  }
+    title:'Accounts',
+    icon:<Users />,
+    link:'/'
+  },
+  {
+    title:'Your posts',
+    icon:<FileText />,
+    link:'/'
+  },
 ]

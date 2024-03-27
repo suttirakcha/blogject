@@ -18,3 +18,7 @@
   font-family:'Urbanist';
   font-weight:700
 }
+
+:focus-visible {
+  outline:none;
+}

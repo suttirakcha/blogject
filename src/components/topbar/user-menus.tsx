@@ -27,17 +27,14 @@ const UserMenus = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <div className="flex items-center gap-x-3 focus:outline-none">
-          <Avatar className="h-9 w-9">
-            <AvatarImage src={user.imageUrl} />
-            <AvatarFallback>{user.name[0]}</AvatarFallback>
-          </Avatar>
-          <h3 className="hidden md:block">{user.name}</h3>
-        </div>
+        <Avatar className="h-9 w-9">
+          <AvatarImage src={user.imageUrl} />
+          <AvatarFallback>{user.name[0]}</AvatarFallback>
+        </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuLabel className="md:hidden">{user.name}</DropdownMenuLabel>
-        <DropdownMenuSeparator className="md:hidden"/>
+        <DropdownMenuLabel>{user.name}</DropdownMenuLabel>
+        <DropdownMenuSeparator />
         <DropdownMenuItem onSelect={() => signOut()}>
           <LogOut className={iconClassName}/>
           Sign out
