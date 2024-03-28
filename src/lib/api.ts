@@ -1,5 +1,5 @@
-import { NewUser, SignIn, User, UserToDB } from '@/types/index'
-import { account, appwriteConfig, avatars, databases } from './appwrite'
+import { NewUser, Post, SignIn, User, UserToDB } from '@/types/index'
+import { account, appwriteConfig, avatars, databases, storage } from './appwrite'
 import { ID, Query } from 'appwrite'
 
 export async function createUserAccount(user: NewUser){
@@ -81,6 +81,54 @@ export async function getCurrentUser(){
     if (!currentUser) throw Error
 
     return currentUser.documents[0]
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export async function createPost(post: Post){
+  try {
+    const uploadedFile = post.image && await uploadFile(post.image[0])
+    const fileUrl = uploadedFile && getFilePreview(uploadedFile.$id)
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export async function uploadFile(file: File){
+  try {
+    await storage.createFile(
+      appwriteConfig.storageId,
+      ID.unique(),
+      file
+    )
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export async function deleteFile(fileId: string){
+  try {
+    await storage.deleteFile(appwriteConfig.storageId, fileId)
+
+    return { status: 'ok' }
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export async function getFilePreview(fileId: string){
+  try {
+    const fileUrl = storage.getFilePreview(
+      appwriteConfig.storageId,
+      fileId,
+      2000,
+      2000,
+      "top",
+      100
+    )
+
+    if (!fileUrl) throw Error
   } catch (err) {
     console.log(err)
   }

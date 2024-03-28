@@ -1,4 +1,4 @@
-import PostForm from "@/components/forms/post-form"
+import PostForm from "@/components/forms/PostForm"
 import { ArrowLeft } from "lucide-react"
 import { Link } from "react-router-dom"
 

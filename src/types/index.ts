@@ -12,7 +12,8 @@ export interface SignIn {
 export interface Post {
   title: string
   content: string
-  image?: URL
+  image?: File[]
+  tags?: string
 }
 
 export interface UserToDB {
