@@ -10,3 +10,9 @@ export const signinSchema = z.object({
   email: z.string().min(1, { message: "Please enter your email."}).email("Invalid email"),
   password: z.string().min(1, { message: "Please enter your password." }).min(8, { message:"Password must be at least 8 characters." })
 })
+
+export const postSchema = z.object({
+  title: z.string().min(1, { message: "Title cannot be empty"}),
+  content: z.string().min(1, { message: "Content cannot be empty" }),
+  image: z.string().optional()
+})

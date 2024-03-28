@@ -12,6 +12,7 @@ import { useSignOutAccount } from "@/lib/react-query/queries-and-mutations"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { LogOut } from "lucide-react"
+import AvatarAccount from "../avatar-account"
 
 const UserMenus = () => {
 
@@ -27,10 +28,7 @@ const UserMenus = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <Avatar className="h-9 w-9">
-          <AvatarImage src={user.imageUrl} />
-          <AvatarFallback>{user.name[0]}</AvatarFallback>
-        </Avatar>
+        <AvatarAccount />
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuLabel>{user.name}</DropdownMenuLabel>

@@ -1,4 +1,4 @@
-import { FileText, Home, LogOut, Users } from "lucide-react"
+import { FileText, Home, Star, Users } from "lucide-react"
 import { ReactNode } from "react"
 
 interface Menus {
@@ -14,13 +14,18 @@ export const mainMenus: Menus[] = [
     link:'/'
   },
   {
-    title:'Accounts',
+    title:'People',
     icon:<Users />,
-    link:'/'
+    link:'/people'
+  },
+  {
+    title:'Saved',
+    icon:<Star />,
+    link:'/saved'
   },
   {
     title:'Your posts',
     icon:<FileText />,
-    link:'/'
+    link:'/your-posts'
   },
 ]

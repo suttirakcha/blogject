@@ -19,7 +19,7 @@ const RootLayout = () => {
       <Topbar />
       <LeftSidebar />
 
-      <section className="mt-[84px] md:mt-0 p-5 md:ml-[320px]">
+      <section className="mt-[84px] md:mt-0 p-10 md:ml-[320px]">
         <Outlet />
       </section>
     </>

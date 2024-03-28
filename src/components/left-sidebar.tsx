@@ -1,23 +1,38 @@
 import Logo from "./logo"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { Button } from "./ui/button"
 import { LogOut } from "lucide-react"
 import { useSignOutAccount } from "@/lib/react-query/queries-and-mutations"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useUserContext } from "@/providers/auth-provider"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { mainMenus } from "@/lib/menus"
+import { cn } from "@/lib/utils"
+import AvatarAccount from "./avatar-account"
+
+interface MenuButtonProps {
+  children: React.ReactNode
+  onClick?: () => void
+  isActive?: boolean
+}
 
 const LeftSidebar = () => {
-
   const { user } = useUserContext()
   const { mutate: signOut, isSuccess } = useSignOutAccount()
+  const location = useLocation()
   const navigate = useNavigate()
 
   useEffect(() => {
     if (isSuccess) navigate(0)
   }, [isSuccess])
+
+  const MenuButton = ({ children, onClick, isActive } : MenuButtonProps) => {
+    return (
+      <Button className={cn("flex items-center gap-x-2 justify-start text-base w-full hover:bg-indigo-800", {"bg-indigo-800": isActive})} variant="ghost" onClick={onClick}>
+        {children}
+      </Button>
+    )
+  }
 
   return (
     <nav className="hidden md:flex flex-col justify-between fixed left-0 top-0 w-[300px] m-5 bg-accent p-5 rounded-xl h-[calc(100%_-_40px)]">
@@ -30,10 +45,10 @@ const LeftSidebar = () => {
           {mainMenus.map(menu => (
             <li key={menu.title}>
               <Link to={menu.link}>
-                <Button className="flex items-center gap-x-2 justify-start text-base px-2" variant="ghost">
+                <MenuButton isActive={location.pathname === menu.link}>
                   {menu.icon}
                   {menu.title}
-                </Button>
+                </MenuButton>
               </Link>
             </li>
           ))}
@@ -42,16 +57,13 @@ const LeftSidebar = () => {
 
       <section className="flex flex-col gap-y-6">
         <div className="flex items-center gap-x-4">
-          <Avatar className="h-9 w-9">
-            <AvatarImage src={user.imageUrl} />
-            <AvatarFallback>{user.name[0]}</AvatarFallback>
-          </Avatar>
+          <AvatarAccount />
           <h3 className="text-xl">{user.name}</h3>
         </div>
-        <Button className="flex items-center gap-x-2 justify-start text-base px-2" variant="ghost">
+        <MenuButton onClick={() => signOut()}>
           <LogOut />
           Log out
-        </Button>
+        </MenuButton>
       </section>
     </nav>
   )

@@ -2,7 +2,7 @@ import { getCurrentUser } from "@/lib/api";
 import { ContextType, User } from "@/types";
 import { createContext, useContext, useState, useEffect } from "react";
 
-export const initial_user: User = {
+export const INITIAL_USER: User = {
   id: '',
   name: '',
   email: '',
@@ -10,8 +10,8 @@ export const initial_user: User = {
   bio: ''
 }
 
-const initial_state = {
-  user: initial_user,
+const INITIAL_STATE = {
+  user: INITIAL_USER,
   isLoading: false,
   isAuthenticated: false,
   setUser: () => {},
@@ -19,11 +19,11 @@ const initial_state = {
   checkAuthUser: async () => false as boolean
 }
 
-const AuthContext = createContext<ContextType>(initial_state)
+const AuthContext = createContext<ContextType>(INITIAL_STATE)
 
 const AuthProvider = ({ children } : { children: React.ReactNode }) => {
 
-  const [user, setUser] = useState<User>(initial_user)
+  const [user, setUser] = useState<User>(INITIAL_USER)
   const [isLoading, setIsLoading] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 

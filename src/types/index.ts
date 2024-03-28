@@ -9,6 +9,12 @@ export interface SignIn {
   password: string
 }
 
+export interface Post {
+  title: string
+  content: string
+  image?: URL
+}
+
 export interface UserToDB {
   accountId: string
   email: string
