@@ -1,7 +1,7 @@
 import Logo from "./logo"
 import { Link, useLocation } from "react-router-dom"
 import { Button } from "./ui/button"
-import { LogOut } from "lucide-react"
+import { LogIn, LogOut, MonitorDown } from "lucide-react"
 import { useSignOutAccount } from "@/lib/react-query/queries-and-mutations"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
@@ -17,7 +17,7 @@ interface MenuButtonProps {
 }
 
 const LeftSidebar = () => {
-  const { user } = useUserContext()
+  const { user, isAuthenticated } = useUserContext()
   const { mutate: signOut, isSuccess } = useSignOutAccount()
   const location = useLocation()
   const navigate = useNavigate()
@@ -55,16 +55,30 @@ const LeftSidebar = () => {
         </ul>
       </section>
 
-      <section className="flex flex-col gap-y-6">
-        <div className="flex items-center gap-x-4">
-          <AvatarAccount />
-          <h3 className="text-xl">{user.name}</h3>
-        </div>
-        <MenuButton onClick={() => signOut()}>
-          <LogOut />
-          Log out
-        </MenuButton>
-      </section>
+      {isAuthenticated ? (
+        <section className="flex flex-col gap-y-6">
+          <div className="flex items-center gap-x-4">
+            <AvatarAccount />
+            <h3 className="text-xl">{user.name}</h3>
+          </div>
+          <MenuButton onClick={() => signOut()}>
+            <LogOut />
+            Log out
+          </MenuButton>
+        </section>
+      ) : (
+        <section className="flex flex-col gap-y-2">
+          <MenuButton onClick={() => navigate('/log-in')}>
+            <LogIn />
+            Log in
+          </MenuButton>
+          <MenuButton onClick={() => navigate('/sign-up')}>
+            <MonitorDown />
+            Sign up
+          </MenuButton>
+        </section>
+      )}
+
     </nav>
   )
 }

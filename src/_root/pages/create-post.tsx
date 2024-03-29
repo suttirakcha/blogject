@@ -1,8 +1,18 @@
 import PostForm from "@/components/forms/PostForm"
+import { useUserContext } from "@/providers/auth-provider"
 import { ArrowLeft } from "lucide-react"
-import { Link } from "react-router-dom"
+import { useEffect } from "react"
+import { Link, useNavigate } from "react-router-dom"
 
 const CreatePost = () => {
+
+  // const { isAuthenticated } = useUserContext()
+  // const navigate = useNavigate()
+
+  // useEffect(() => {
+  //   if (!isAuthenticated) navigate('/log-in')
+  // }, [isAuthenticated])
+
   return (
     <main>
       <header className="flex items-center gap-x-3 mb-8">

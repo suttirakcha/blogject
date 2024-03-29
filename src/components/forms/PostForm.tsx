@@ -12,7 +12,6 @@ import FileUploader from "./FileUploader"
 import { Models } from "appwrite"
 import { useUserContext } from "@/providers/auth-provider"
 import { useCreatePost } from "@/lib/react-query/queries-and-mutations"
-import { createPost } from "@/lib/api"
 
 interface PostFormProps {
   post?: Models.Document
@@ -29,7 +28,7 @@ const PostForm = ({ post } : PostFormProps) => {
     defaultValues: {
       title: post ? post?.title : "",
       content: post ? post?.content : "",
-      image: [],
+      file: [],
       tags: post ? post.tags.join(',') : ''
     },
   })
@@ -86,7 +85,7 @@ const PostForm = ({ post } : PostFormProps) => {
         />
         <FormField
           control={form.control}
-          name="image"
+          name="file"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-base">Upload images</FormLabel>

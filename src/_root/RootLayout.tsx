@@ -5,16 +5,6 @@ import LeftSidebar from "@/components/left-sidebar"
 import { Toaster } from "@/components/ui/toaster"
 
 const RootLayout = () => {
-
-  const navigate = useNavigate()
-  const cookieFallback = localStorage.getItem("cookieFallback")
-
-  useEffect(() => {
-    if (cookieFallback === '[]' || cookieFallback === null){
-      navigate('/sign-in')
-    }
-  }, [cookieFallback])
-
   return (
     <>
       <Topbar />

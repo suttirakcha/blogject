@@ -42,7 +42,7 @@ const SigninForm = () => {
       navigate('/')
     } else {
       toast({
-        title: "Failed to sign in, please try again.",
+        title: "Failed to log in, please try again.",
         variant: "destructive"
       })
     }
@@ -51,7 +51,7 @@ const SigninForm = () => {
   return (
     <Form {...form}>
       <div className="mb-8 flex flex-col gap-y-2 items-center">
-        <h1 className="text-3xl font-bold">Sign in to Blogject</h1>
+        <h1 className="text-3xl font-bold">Log in to Blogject</h1>
         <p className="text-gray-400">Please enter your details</p>
       </div>
 

@@ -18,7 +18,7 @@ function App() {
         </Route>
 
         <Route element={<AuthLayout />}>
-          <Route path="/sign-in" element={<SigninForm />} />
+          <Route path="/log-in" element={<SigninForm />} />
           <Route path="/sign-up" element={<SignupForm />} />
         </Route>
       </Routes>

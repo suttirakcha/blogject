@@ -41,7 +41,7 @@ const SignupForm = () => {
       variant: "destructive"
     })
     if (!session) return toast({ 
-      title: "Failed to sign in, please try again." ,
+      title: "Failed to log in, please try again." ,
       variant: "destructive"
     })
 
@@ -108,7 +108,7 @@ const SignupForm = () => {
           <Button type="submit" className="text-base bg-indigo-600 hover:bg-indigo-400 text-white" disabled={isCreatingAccount}>
             {isCreatingAccount ? 'Creating...' : 'Create an account'}
           </Button>
-          <p className="text-gray-400">Already have an account? <Link to="/sign-in" className="text-indigo-400">Sign in</Link></p>
+          <p className="text-gray-400">Already have an account? <Link to="/log-in" className="text-indigo-400">Log in</Link></p>
         </div>
       </form>
     </Form>
