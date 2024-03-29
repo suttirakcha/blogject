@@ -1,22 +1,28 @@
-import { Button } from "@/components/ui/button"
-import { PlusCircle } from "lucide-react"
-import { Link } from "react-router-dom"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { useGetRecentPosts } from "@/lib/react-query/queries-and-mutations"
+import { Models } from "appwrite"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import PostCard from "@/components/PostCard"
 
 const MainPage = () => {
+
+  const { data: posts, isPending: isPostLoading } = useGetRecentPosts()
+
   return (
     <main>
-      <div className="flex flex-col items-center gap-y-6">
-        <div className="flex flex-col items-center gap-y-2">
-          <h1 className="text-3xl font-bold">Welcome to Blogject!</h1>
-          <p>Ready to create your first post?</p>
-        </div>
+      <h1 className="text-3xl font-bold mb-8">Home Feed</h1>
 
-        <Link to="/create-post">
-          <Button className="flex items-center gap-x-2">
-            <PlusCircle />
-            Create your first post
-          </Button>
-        </Link>
+      <div className="flex flex-col gap-y-8">
+        {posts?.documents.map((post: Models.Document) => (
+          <PostCard post={post}/>
+        ))}
       </div>
     </main>
   )

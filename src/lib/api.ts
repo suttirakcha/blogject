@@ -1,4 +1,4 @@
-import { NewUser, Post, SignIn, User, UserToDB } from '@/types/index'
+import { NewUser, Post, SignIn, UserToDB } from '@/types/index'
 import { account, appwriteConfig, avatars, databases, storage } from './appwrite'
 import { ID, Query } from 'appwrite'
 
@@ -88,8 +88,36 @@ export async function getCurrentUser(){
 
 export async function createPost(post: Post){
   try {
-    const uploadedFile = post.image && await uploadFile(post.image[0])
+    const uploadedFile = post.file && await uploadFile(post.file[0])
+
     const fileUrl = uploadedFile && getFilePreview(uploadedFile.$id)
+    if (!fileUrl && uploadedFile) {
+      deleteFile(uploadedFile.$id)
+      throw Error
+    }
+
+    const tags = post.tags?.replace(/ /g,'').split(',') || []
+
+    const newPost = await databases.createDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.postsCollectionId,
+      ID.unique(),
+      {
+        creator: post.userId,
+        title: post.title,
+        content: post.content,
+        imageUrl: fileUrl,
+        imageId: uploadedFile?.$id,
+        tags: tags
+      }
+    )
+
+    if (!newPost && uploadedFile){
+      await deleteFile(uploadedFile.$id)
+      throw Error
+    }
+
+    return newPost
   } catch (err) {
     console.log(err)
   }
@@ -97,11 +125,13 @@ export async function createPost(post: Post){
 
 export async function uploadFile(file: File){
   try {
-    await storage.createFile(
+    const uploadedFile = await storage.createFile(
       appwriteConfig.storageId,
       ID.unique(),
       file
     )
+
+    return uploadedFile
   } catch (err) {
     console.log(err)
   }
@@ -127,9 +157,21 @@ export async function getFilePreview(fileId: string){
       "top",
       100
     )
-
-    if (!fileUrl) throw Error
+  
+    return fileUrl
   } catch (err) {
     console.log(err)
   }
+}
+
+export async function getRecentPosts(){
+  const posts = await databases.listDocuments(
+    appwriteConfig.databaseId,
+    appwriteConfig.postsCollectionId,
+    [Query.orderDesc('$createdAt'), Query.limit(20)]
+  )
+
+  if (!posts) throw Error
+
+  return posts
 }

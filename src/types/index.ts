@@ -10,9 +10,10 @@ export interface SignIn {
 }
 
 export interface Post {
+  userId: string
   title: string
   content: string
-  image?: File[]
+  file?: File[]
   tags?: string
 }
 

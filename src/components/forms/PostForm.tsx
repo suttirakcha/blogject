@@ -22,6 +22,7 @@ const PostForm = ({ post } : PostFormProps) => {
 
   const { mutateAsync: createPost, isPending: isCreating } = useCreatePost()
   const { user } = useUserContext()
+  const navigate = useNavigate()
 
   const form = useForm<z.infer<typeof postSchema>>({
     resolver: zodResolver(postSchema),
@@ -41,6 +42,11 @@ const PostForm = ({ post } : PostFormProps) => {
         title: 'There was an error creating the post, please try again.',
         variant: 'destructive'
       })
+    } else {
+      toast({
+        title: 'Successfully created the post',
+      })
+      navigate('/')
     }
   }
 
@@ -110,11 +116,11 @@ const PostForm = ({ post } : PostFormProps) => {
         />
 
         <div className="flex gap-x-4 justify-end">
-          <Button type="button" variant="secondary">
+          <Button type="button" variant="secondary" disabled={isCreating}>
             Cancel
           </Button>
-          <Button type="submit" className="text-base bg-indigo-600 hover:bg-indigo-400 text-white" >
-            Create post
+          <Button type="submit" className="text-base bg-indigo-600 hover:bg-indigo-400 text-white" disabled={isCreating}>
+            {isCreating ? 'Creating...' : 'Create post'}
           </Button>
         </div>
       </form>
