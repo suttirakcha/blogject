@@ -17,13 +17,17 @@ const PostCard = ({ post } : PostCardProps) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{post?.imageUrl}</CardTitle>
+        {post?.imageUrl && <CardTitle className="mb-8">
+          <img src={post?.imageUrl} className="w-full rounded-md"/>
+        </CardTitle>}
         <CardDescription className="flex items-center gap-x-2">
-          <Avatar className="h-5 w-5">
+          <Avatar className="h-9 w-9">
             <AvatarImage src={post?.creator?.imageUrl} />
             <AvatarFallback className="text-sm">{post?.creator?.name[0]}</AvatarFallback>
           </Avatar>
-          <h3>{post?.creator?.name}</h3>
+          <div>
+            <h3>{post?.creator?.name}</h3>
+          </div>
         </CardDescription>
       </CardHeader>
       <CardContent>

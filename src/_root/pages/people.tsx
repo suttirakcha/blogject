@@ -1,7 +1,9 @@
+import TopHeader from "@/components/TopHeader"
+
 const PeoplePage = () => {
   return (
     <main>
-      <h1 className="text-3xl font-bold mb-8">People</h1>
+      <TopHeader title="People"/>
     </main>
   )
 }

@@ -6,15 +6,15 @@ import { Toaster } from "@/components/ui/toaster"
 
 const RootLayout = () => {
   return (
-    <>
+    <div className="fade-in">
       <Topbar />
       <LeftSidebar />
 
-      <section className="mt-[84px] md:mt-0 p-10 md:ml-[320px]">
+      <section className="mt-[100px] p-10 md:ml-[320px]">
         <Outlet />
         <Toaster />
       </section>
-    </>
+    </div>
   )
 }
 

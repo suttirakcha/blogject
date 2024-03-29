@@ -26,8 +26,8 @@ const PostForm = ({ post } : PostFormProps) => {
   const form = useForm<z.infer<typeof postSchema>>({
     resolver: zodResolver(postSchema),
     defaultValues: {
-      title: post ? post?.title : "",
-      content: post ? post?.content : "",
+      title: post ? post.title : "",
+      content: post ? post.content : "",
       file: [],
       tags: post ? post.tags.join(',') : ''
     },

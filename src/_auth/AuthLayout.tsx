@@ -8,7 +8,7 @@ const AuthLayout = () => {
   const { isAuthenticated } = useUserContext()
 
   return (
-    <>
+    <div className="fade-in">
       {isAuthenticated ? (
         <Navigate to="/" />
       ) : (
@@ -23,7 +23,7 @@ const AuthLayout = () => {
           </div>
         </section>
       )}
-    </>
+    </div>
   )
 }
 

@@ -15,7 +15,6 @@ import { LogOut } from "lucide-react"
 import AvatarAccount from "../avatar-account"
 
 const UserMenus = () => {
-
   const iconClassName = "w-4 h-4 mr-2"
   const { user } = useUserContext()
   const { mutate: signOut, isSuccess } = useSignOutAccount()

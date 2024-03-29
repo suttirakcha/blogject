@@ -13,7 +13,7 @@ export interface Post {
   userId: string
   title: string
   content: string
-  file?: File[]
+  file: File[]
   tags?: string
 }
 

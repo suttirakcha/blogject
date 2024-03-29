@@ -1,3 +1,4 @@
+import TopHeader from "@/components/TopHeader"
 import PostForm from "@/components/forms/PostForm"
 import { useUserContext } from "@/providers/auth-provider"
 import { ArrowLeft } from "lucide-react"
@@ -15,12 +16,12 @@ const CreatePost = () => {
 
   return (
     <main>
-      <header className="flex items-center gap-x-3 mb-8">
-        <Link to="/your-posts">
+      <TopHeader 
+        prefix={<Link to="/your-posts">
           <ArrowLeft />
-        </Link>
-        <h1 className="text-3xl font-bold">Create Post</h1>
-      </header>
+        </Link>}
+        title="Create Post"
+      />
 
       <div className="max-w-3xl m-auto">
         <PostForm />

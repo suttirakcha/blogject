@@ -1,7 +1,6 @@
-import { ImageUp, Upload } from 'lucide-react'
+import { ImageUp, X } from 'lucide-react'
 import React, { useState, useCallback } from 'react'
 import { FileWithPath, useDropzone } from 'react-dropzone'
-import { Button } from '@/components/ui/button'
 
 interface FileUploaderProps {
   fieldChange: (FILES: File[]) => void
@@ -34,25 +33,31 @@ const FileUploader = ({ fieldChange, mediaUrl } : FileUploaderProps) => {
     }
   }
 
+  const resetImage = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    setFileUrl("")
+  }
+
   return (
     <div {...getRootProps()}>
       <input {...getInputProps()} />
-      <div className='border rounded-md p-10 flex flex-col items-center gap-y-2'>
+      <div className='border rounded-md p-10 flex flex-col items-center gap-y-2 relative'>
         {fileUrl ? (
           <div className='flex gap-x-4 items-center'>
-            <img src={fileUrl} width={60} height={60} className='object-cover rounded-md' alt={file[0].name}/>
-
+            <img src={fileUrl} width={80} height={80} className='object-cover rounded-md' alt={file[0].name}/>
             <div>
               <p className='font-bold'>{file[0].name}</p>
               <p className='text-sm'>{checkFileSize(file[0].size)}</p>
             </div>
+
+            <X className='absolute top-4 right-4 cursor-pointer' onClick={resetImage}/>
           </div>
         ) : (
           <>
             <ImageUp className='w-16 h-16'/>
 
             <h3 className='text-xl font-bold'>Upload or drag photo here</h3>
-            <p>(Accepted PNG, SVG, and JPG) (maximum file size 2MB)</p>
+            <p>(Accept PNG, SVG, and JPG)</p>
           </>
         )}
       </div>

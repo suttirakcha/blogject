@@ -88,36 +88,54 @@ export async function getCurrentUser(){
 
 export async function createPost(post: Post){
   try {
-    const uploadedFile = post.file && await uploadFile(post.file[0])
-
-    const fileUrl = uploadedFile && getFilePreview(uploadedFile.$id)
-    if (!fileUrl && uploadedFile) {
-      deleteFile(uploadedFile.$id)
-      throw Error
-    }
-
+    const uploadedFile = await uploadFile(post.file[0])
     const tags = post.tags?.replace(/ /g,'').split(',') || []
 
-    const newPost = await databases.createDocument(
-      appwriteConfig.databaseId,
-      appwriteConfig.postsCollectionId,
-      ID.unique(),
-      {
-        creator: post.userId,
-        title: post.title,
-        content: post.content,
-        imageUrl: fileUrl,
-        imageId: uploadedFile?.$id,
-        tags: tags
+    if (uploadedFile){
+      const fileUrl = getFilePreview(uploadedFile.$id)
+      if (!fileUrl) {
+        deleteFile(uploadedFile.$id)
+        throw Error
       }
-    )
 
-    if (!newPost && uploadedFile){
-      await deleteFile(uploadedFile.$id)
-      throw Error
+      const newPost = await databases.createDocument(
+        appwriteConfig.databaseId,
+        appwriteConfig.postsCollectionId,
+        ID.unique(),
+        {
+          creator: post.userId,
+          title: post.title,
+          content: post.content,
+          imageUrl: fileUrl,
+          imageId: uploadedFile?.$id,
+          tags: tags
+        }
+      )
+
+      if (!newPost){
+        await deleteFile(uploadedFile.$id)
+        throw Error
+      }
+  
+      return newPost
+    } else {
+      const newPost = await databases.createDocument(
+        appwriteConfig.databaseId,
+        appwriteConfig.postsCollectionId,
+        ID.unique(),
+        {
+          creator: post.userId,
+          title: post.title,
+          content: post.content,
+          tags: tags
+        }
+      )
+
+      if (!newPost) throw Error
+      return newPost
     }
 
-    return newPost
+
   } catch (err) {
     console.log(err)
   }
@@ -147,13 +165,13 @@ export async function deleteFile(fileId: string){
   }
 }
 
-export async function getFilePreview(fileId: string){
+export function getFilePreview(fileId: string){
   try {
     const fileUrl = storage.getFilePreview(
       appwriteConfig.storageId,
       fileId,
-      2000,
-      2000,
+      1000,
+      1000,
       "top",
       100
     )
