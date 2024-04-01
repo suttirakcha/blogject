@@ -37,7 +37,7 @@ const YourPosts = () => {
             {(yourPosts as any).length > 0 ? (
               <div className="flex flex-col gap-6">
                 {yourPosts?.map(post => (
-                  <PostCard post={post}/>
+                  <PostCard post={post} key={post.title}/>
                 ))}
               </div>
             ) : (

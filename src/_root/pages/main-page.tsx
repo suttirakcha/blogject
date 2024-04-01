@@ -7,6 +7,8 @@ import TopHeader from "@/components/TopHeader"
 const MainPage = () => {
   const { data: posts, isPending: isPostLoading } = useGetRecentPosts()
 
+  console.log(posts?.documents)
+
   return (
     <main>
       <TopHeader title="Home Feed"/>
@@ -19,7 +21,7 @@ const MainPage = () => {
         ) : (
           <div className="flex flex-col gap-6">
             {posts?.documents.map((post: Models.Document) => (
-              <PostCard post={post}/>
+              <PostCard post={post} key={post.title}/>
             ))}
           </div>
         )}
