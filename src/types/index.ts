@@ -32,6 +32,16 @@ export interface User {
   bio: string
 }
 
+export interface Likes {
+  postId: string
+  likesArray: string[]
+}
+
+export interface Saves {
+  postId: string
+  userId: string
+}
+
 export interface ContextType {
   user: User
   setUser: React.Dispatch<React.SetStateAction<User>>

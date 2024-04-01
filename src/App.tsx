@@ -5,6 +5,7 @@ import SigninForm from './_auth/forms/SigninForm'
 import SignupForm from './_auth/forms/SignupForm'
 import RootLayout from './_root/RootLayout'
 import { MainPage, PeoplePage, YourPosts, CreatePost } from './_root/pages'
+import SavedPostsPage from './_root/pages/saved-posts'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/people" element={<PeoplePage />}/>
           <Route path="/your-posts" element={<YourPosts />}/>
           <Route path="/create-post" element={<CreatePost />}/>
+          <Route path="/saved" element={<SavedPostsPage />}/>
         </Route>
 
         <Route element={<AuthLayout />}>

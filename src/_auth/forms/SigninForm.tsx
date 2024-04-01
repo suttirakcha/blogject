@@ -84,7 +84,7 @@ const SigninForm = () => {
         />
 
         <div className="flex flex-col gap-y-4 items-center">
-          <Button type="submit" className="text-base bg-indigo-600 hover:bg-indigo-400 text-white" disabled={isSigningIn}>
+          <Button type="submit" className="text-base text-white" disabled={isSigningIn}>
             {isSigningIn ? 'Signing in...' : 'Sign in'}
           </Button>
           <p className="text-gray-400">Don't have an account? <Link to="/sign-up" className="text-indigo-400">Sign up</Link></p>

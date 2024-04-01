@@ -28,7 +28,7 @@ const LeftSidebar = () => {
 
   const MenuButton = ({ children, onClick, isActive } : MenuButtonProps) => {
     return (
-      <Button className={cn("flex items-center gap-x-2 justify-start text-base w-full hover:bg-indigo-800", {"bg-indigo-800": isActive})} variant="ghost" onClick={onClick}>
+      <Button className={cn("flex items-center gap-x-2 justify-start text-base w-full", {"bg-indigo-800": isActive})} variant="ghost" onClick={onClick}>
         {children}
       </Button>
     )

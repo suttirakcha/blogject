@@ -105,7 +105,7 @@ const SignupForm = () => {
         />
 
         <div className="flex flex-col gap-y-4 items-center">
-          <Button type="submit" className="text-base bg-indigo-600 hover:bg-indigo-400 text-white" disabled={isCreatingAccount}>
+          <Button type="submit" className="text-base text-white" disabled={isCreatingAccount}>
             {isCreatingAccount ? 'Creating...' : 'Create an account'}
           </Button>
           <p className="text-gray-400">Already have an account? <Link to="/log-in" className="text-indigo-400">Log in</Link></p>

@@ -15,7 +15,7 @@ const CreatePost = () => {
   // }, [isAuthenticated])
 
   return (
-    <main>
+    <>
       <TopHeader 
         prefix={<Link to="/your-posts">
           <ArrowLeft />
@@ -26,7 +26,7 @@ const CreatePost = () => {
       <div className="max-w-3xl m-auto">
         <PostForm />
       </div>
-    </main>
+    </>
   )
 }
 

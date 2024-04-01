@@ -11,7 +11,11 @@ const RootLayout = () => {
       <LeftSidebar />
 
       <section className="mt-[100px] p-10 md:ml-[320px]">
-        <Outlet />
+  
+        <main className="max-w-4xl m-auto">
+          <Outlet />
+        </main>
+
         <Toaster />
       </section>
     </div>
