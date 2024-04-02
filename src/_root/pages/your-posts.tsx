@@ -1,6 +1,6 @@
 import Loading from "@/components/Loading"
 import NoPosts from "@/components/posts/NoPosts"
-import PostCard from "@/components/posts/PostCard"
+import PostView from "@/components/posts/PostView"
 import TopHeader from "@/components/TopHeader"
 import { Button } from "@/components/ui/button"
 import { useGetRecentPosts } from "@/lib/react-query/queries-and-mutations"
@@ -13,8 +13,6 @@ const YourPosts = () => {
   const { data: posts, isPending: isPostLoading } = useGetRecentPosts()
   const { isAuthenticated } = useUserContext()
   const { user } = useUserContext()
-
-  console.log(user)
 
   const yourPosts = posts?.documents?.filter(post => post?.creator?.$id === user.id)
 
@@ -37,9 +35,9 @@ const YourPosts = () => {
       ) : (
         <>
           {(yourPosts as any).length > 0 ? (
-            <div className="grid lg:grid-cols-3 gap-6">
+            <div className="flex flex-col gap-6">
               {yourPosts?.map(post => (
-                <PostCard post={post} key={post.title} />
+                <PostView post={post} key={post.title} />
               ))}
             </div>
           ) : (

@@ -4,7 +4,7 @@ import AuthLayout from './_auth/AuthLayout'
 import SigninForm from './_auth/forms/SigninForm'
 import SignupForm from './_auth/forms/SignupForm'
 import RootLayout from './_root/RootLayout'
-import { MainPage, PeoplePage, YourPosts, CreatePost } from './_root/pages'
+import { MainPage, PeoplePage, YourPosts, CreatePost, EditPost } from './_root/pages'
 import SavedPostsPage from './_root/pages/saved-posts'
 
 function App() {
@@ -17,6 +17,7 @@ function App() {
           <Route path="/your-posts" element={<YourPosts />}/>
           <Route path="/create-post" element={<CreatePost />}/>
           <Route path="/saved" element={<SavedPostsPage />}/>
+          <Route path="/posts/:id" element={<EditPost />}/>
         </Route>
 
         <Route element={<AuthLayout />}>

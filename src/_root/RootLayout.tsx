@@ -12,7 +12,7 @@ const RootLayout = () => {
 
       <section className="mt-[100px] p-10 md:ml-[320px]">
   
-        <main className="max-w-4xl m-auto">
+        <main className="max-w-3xl m-auto">
           <Outlet />
         </main>
 

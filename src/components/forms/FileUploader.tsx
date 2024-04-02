@@ -1,5 +1,5 @@
 import { ImageUp, X } from 'lucide-react'
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import { FileWithPath, useDropzone } from 'react-dropzone'
 
 interface FileUploaderProps {
@@ -23,16 +23,6 @@ const FileUploader = ({ fieldChange, mediaUrl } : FileUploaderProps) => {
     }
   })
 
-  const checkFileSize = (size: number): string => {
-    if (size >= (1024 * 1024)){
-      return `${(size / (1024 * 1024)).toFixed(2)}MB`
-    } else if (size >= 1024){
-      return `${(size / 1024).toFixed(2)}KB`
-    } else {
-      return `${size.toFixed(2)}B`
-    }
-  }
-
   const resetImage = (e: React.MouseEvent) => {
     e.stopPropagation()
     setFileUrl("")
@@ -43,14 +33,9 @@ const FileUploader = ({ fieldChange, mediaUrl } : FileUploaderProps) => {
       <input {...getInputProps()} />
       <div className='border rounded-md p-10 flex flex-col items-center gap-y-2 relative'>
         {fileUrl ? (
-          <div className='flex gap-x-4 items-center'>
-            <img src={fileUrl} width={80} height={80} className='object-cover rounded-md' alt={file[0].name}/>
-            <div>
-              <p className='font-bold'>{file[0].name}</p>
-              <p className='text-sm'>{checkFileSize(file[0].size)}</p>
-            </div>
-
-            <X className='absolute top-4 right-4 cursor-pointer' onClick={resetImage}/>
+          <div className='items-center'>
+            <img src={fileUrl} width={240} height={240} className='object-cover rounded-md' alt={fileUrl}/>
+            <X className='absolute top-4 right-4 cursor-pointer' onClick={resetImage}/> 
           </div>
         ) : (
           <>

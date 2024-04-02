@@ -24,7 +24,7 @@ const CreatePost = () => {
       />
 
       <div className="max-w-3xl m-auto">
-        <PostForm />
+        <PostForm action="Create"/>
       </div>
     </>
   )

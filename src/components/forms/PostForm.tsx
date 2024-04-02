@@ -5,47 +5,71 @@ import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { toast } from "@/components/ui/use-toast"
 import { postSchema } from "@/lib/validation"
 import FileUploader from "./FileUploader"
 import { Models } from "appwrite"
 import { useUserContext } from "@/providers/auth-provider"
-import { useCreatePost } from "@/lib/react-query/queries-and-mutations"
+import { useCreatePost, useUpdatePost } from "@/lib/react-query/queries-and-mutations"
 
 interface PostFormProps {
   post?: Models.Document
+  action: 'Create' | 'Update'
 }
 
-const PostForm = ({ post } : PostFormProps) => {
+const PostForm = ({ post, action } : PostFormProps) => {
 
   const { mutateAsync: createPost, isPending: isCreating } = useCreatePost()
+  const { mutateAsync: updatePost, isPending: isUpdating } = useUpdatePost()
+
   const { user } = useUserContext()
   const navigate = useNavigate()
 
   const form = useForm<z.infer<typeof postSchema>>({
     resolver: zodResolver(postSchema),
     defaultValues: {
-      title: post ? post.title : "",
-      content: post ? post.content : "",
+      title: post ? post?.title : "",
+      content: post ? post?.content : "",
       file: [],
-      tags: post ? post.tags.join(',') : ''
+      tags: post ? post?.tags.join(',') : ''
     },
   })
 
   const onSubmit = async (values: z.infer<typeof postSchema>) => {
-    const newPost = await createPost({...values, userId: user.id })
+    if (post && action === "Update"){
+      const updatedPost = await updatePost({
+        ...values,
+        postId: post.$id,
+        imageId: post?.imageId,
+        imageUrl: post?.imageUrl
+      })
 
-    if (!newPost){
-      toast({
-        title: 'There was an error creating the post, please try again.',
-        variant: 'destructive'
-      })
+      if (!updatedPost){
+        toast({
+          title: 'There was an error updating the post, please try again.',
+          variant: 'destructive'
+        })
+      } else {
+        toast({
+          title: 'Successfully updated the post',
+        })
+        navigate(`/posts/${post.$id}`)
+      }
     } else {
-      toast({
-        title: 'Successfully created the post',
-      })
-      navigate('/')
+      const newPost = await createPost({...values, userId: user.id })
+
+      if (!newPost){
+        toast({
+          title: 'There was an error creating the post, please try again.',
+          variant: 'destructive'
+        })
+      } else {
+        toast({
+          title: 'Successfully created the post',
+        })
+        navigate('/')
+      }
     }
   }
 
@@ -88,7 +112,7 @@ const PostForm = ({ post } : PostFormProps) => {
           name="file"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-base">Upload images</FormLabel>
+              <FormLabel className="text-base">Upload image</FormLabel>
               <FormControl>
                 <FileUploader 
                   fieldChange={field.onChange}
@@ -118,8 +142,10 @@ const PostForm = ({ post } : PostFormProps) => {
           <Button type="button" variant="secondary" disabled={isCreating}>
             Cancel
           </Button>
-          <Button type="submit" className="text-base bg-indigo-600 hover:bg-indigo-400 text-white" disabled={isCreating}>
-            {isCreating ? 'Creating...' : 'Create post'}
+          <Button type="submit" className="text-base bg-indigo-600 hover:bg-indigo-400 text-white" disabled={isCreating || isUpdating}>
+            {action === 'Update' ? 
+              <>{isUpdating ? 'Updating...' : 'Update post'}</>
+            : <>{isCreating ? 'Creating...' : 'Create post'}</>}
           </Button>
         </div>
       </form>

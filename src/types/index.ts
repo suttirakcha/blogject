@@ -17,6 +17,21 @@ export interface Post {
   tags?: string
 }
 
+export interface PostToUpdate {
+  postId: string
+  title: string
+  content: string
+  imageId: string
+  imageUrl: URL
+  file: File[]
+  tags?: string
+}
+
+export interface PostToDelete {
+  postId: string
+  imageId: string
+}
+
 export interface UserToDB {
   accountId: string
   email: string

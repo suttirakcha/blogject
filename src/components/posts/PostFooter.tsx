@@ -1,18 +1,10 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+
 import { Models } from "appwrite"
-import { Badge } from "@/components/ui/badge"
-import { checkIfLiked, formatDate } from "@/lib/utils"
-import { Bookmark, Heart } from "lucide-react"
+import { checkIfLiked } from "@/lib/utils"
+import { Bookmark, Heart, Loader2 } from "lucide-react"
 import { useDeleteSavedPosts, useGetCurrentUser, useLikePosts, useSavePosts } from "@/lib/react-query/queries-and-mutations"
 import { useState, useEffect } from "react"
+import { useUserContext } from "@/providers/auth-provider"
 
 interface PostFooterProps {
   post: Models.Document
@@ -26,37 +18,42 @@ const PostFooter = ({ post, userId } : PostFooterProps) => {
   const [isSaved, setIsSaved] = useState(false)
 
   const { mutate: likePost } = useLikePosts()
-  const { mutate: savePost } = useSavePosts()
-  const { mutate: deleteSavedPost } = useDeleteSavedPosts()
+  const { mutate: savePost, isPending: isSavingPost } = useSavePosts()
+  const { mutate: deleteSavedPost, isPending: isDeletingSaved } = useDeleteSavedPosts()
 
   const { data: currentUser } = useGetCurrentUser()
+  const { isAuthenticated } = useUserContext()
   const savedPostRecord = currentUser?.save.find((record: Models.Document) => record.post.$id === post.$id)
 
   const handleLikePost = (e: React.MouseEvent) => {
-    e.stopPropagation()
+    if (isAuthenticated){
+      e.stopPropagation()
 
-    let newLikes = [...likes]
-    const hasLiked = newLikes.includes(userId)
+      let newLikes = [...likes]
+      const hasLiked = newLikes.includes(userId)
 
-    if (hasLiked){
-      newLikes = newLikes.filter((id) => id !== userId)
-    } else {
-      newLikes.push(userId)
+      if (hasLiked){
+        newLikes = newLikes.filter((id) => id !== userId)
+      } else {
+        newLikes.push(userId)
+      }
+
+      setLikes(newLikes)
+      likePost({ postId: post.$id, likesArray: newLikes })
     }
-
-    setLikes(newLikes)
-    likePost({ postId: post.$id, likesArray: newLikes })
   }
 
   const handleSavePost = (e: React.MouseEvent) => {
-    e.stopPropagation()
+    if (isAuthenticated){
+      e.stopPropagation()
 
-    if (savedPostRecord) {
-      setIsSaved(false)
-      deleteSavedPost(savedPostRecord.$id)
-    } else {
-      savePost({ postId: post.$id, userId })
-      setIsSaved(true)
+      if (savedPostRecord) {
+        setIsSaved(false)
+        deleteSavedPost(savedPostRecord.$id)
+      } else {
+        savePost({ postId: post.$id, userId })
+        setIsSaved(true)
+      } 
     }
   }
 
@@ -71,7 +68,7 @@ const PostFooter = ({ post, userId } : PostFooterProps) => {
         <p className="text-sm">{likes.length} {likes.length === 1 ? 'like' : 'likes'}</p>
       </div>
       <div>
-        <Bookmark onClick={handleSavePost} fill={isSaved ? 'white' : 'transparent'}/>
+        {isSavingPost || isDeletingSaved ? <Loader2 className="animate-spin text-indigo-600"/> : <Bookmark onClick={handleSavePost} fill={isSaved ? 'white' : 'transparent'}/>}
       </div>
     </div>
   )
