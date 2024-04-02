@@ -4,8 +4,8 @@ import AuthLayout from './_auth/AuthLayout'
 import SigninForm from './_auth/forms/SigninForm'
 import SignupForm from './_auth/forms/SignupForm'
 import RootLayout from './_root/RootLayout'
-import { MainPage, PeoplePage, YourPosts, CreatePost, EditPost } from './_root/pages'
-import SavedPostsPage from './_root/pages/saved-posts'
+import { MainPage, SearchPage, YourPosts, CreatePost, EditPost } from './_root/pages'
+import SavedPostsPage from './_root/pages/savedPosts'
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<RootLayout />}>
           <Route path="/" element={<MainPage />}/>
-          <Route path="/people" element={<PeoplePage />}/>
+          <Route path="/search" element={<SearchPage />}/>
           <Route path="/your-posts" element={<YourPosts />}/>
           <Route path="/create-post" element={<CreatePost />}/>
           <Route path="/saved" element={<SavedPostsPage />}/>

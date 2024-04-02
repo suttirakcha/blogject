@@ -1,4 +1,4 @@
-import { Bookmark, FileText, Home, Users } from "lucide-react"
+import { Bookmark, FileText, Home, Search } from "lucide-react"
 import { ReactNode } from "react"
 
 interface Menus {
@@ -14,9 +14,9 @@ export const mainMenus: Menus[] = [
     link:'/'
   },
   {
-    title:'People',
-    icon:<Users />,
-    link:'/people'
+    title:'Search',
+    icon:<Search />,
+    link:'/search'
   },
   {
     title:'Saved',

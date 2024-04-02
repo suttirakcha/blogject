@@ -3,7 +3,7 @@ import { Models } from "appwrite"
 import { checkIfLiked } from "@/lib/utils"
 import { Bookmark, Heart, Loader2 } from "lucide-react"
 import { useDeleteSavedPosts, useGetCurrentUser, useLikePosts, useSavePosts } from "@/lib/react-query/queries-and-mutations"
-import { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { useUserContext } from "@/providers/auth-provider"
 
 interface PostFooterProps {

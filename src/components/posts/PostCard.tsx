@@ -23,6 +23,10 @@ const PostCard = ({ post } : PostCardProps) => {
 
   const { user } = useUserContext()
 
+  const handleDeletePost = (e: React.MouseEvent) => {
+    
+  }
+
   return (
     <Card className="flex flex-col h-full justify-between">
       <CardHeader>
@@ -40,9 +44,9 @@ const PostCard = ({ post } : PostCardProps) => {
           {user.id === post?.creator?.$id ? (
             <div className="flex items-center gap-x-4">
               <Link to={`/posts/${post.$id}`}>
-                <Edit className="h-5 w-5" />
+                <Edit className="h-5 w-5 stroke-indigo-500" />
               </Link>
-              <Trash2 className="h-5 w-5" />
+              <Trash2 className="h-5 w-5 stroke-red-500" onClick={handleDeletePost}/>
             </div>
           ) : null}
         </CardTitle>

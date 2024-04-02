@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom"
 import { useUserContext } from "@/providers/auth-provider"
 import { mainMenus } from "@/lib/menus"
 import { cn } from "@/lib/utils"
-import AvatarAccount from "./avatar-account"
+import AvatarAccount from "./AvatarAccount"
 
 interface MenuButtonProps {
   children: React.ReactNode

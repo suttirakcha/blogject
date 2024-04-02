@@ -9,7 +9,7 @@ const Topbar = () => {
   const { isAuthenticated } = useUserContext()
 
   return (
-    <div className="border-b fixed left-0 top-0 m-5 rounded-full w-[calc(100%_-_40px)] md:hidden flex bg-accent h-16 p-5 items-center justify-between">
+    <div className="fixed left-0 top-0 m-5 w-[calc(100%_-_40px)] rounded-full bg-accent md:hidden flex h-16 p-5 items-center justify-between z-[50]">
       <Link to='/'>
         <Logo />
       </Link>

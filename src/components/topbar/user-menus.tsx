@@ -12,7 +12,7 @@ import { useSignOutAccount } from "@/lib/react-query/queries-and-mutations"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { LogOut } from "lucide-react"
-import AvatarAccount from "../avatar-account"
+import AvatarAccount from "../AvatarAccount"
 
 const UserMenus = () => {
   const iconClassName = "w-4 h-4 mr-2"

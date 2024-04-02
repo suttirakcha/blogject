@@ -1,5 +1,5 @@
-export { default as YourPosts } from "./your-posts";
-export { default as CreatePost } from "./create-post"
-export { default as EditPost } from "./edit-post"
-export { default as MainPage } from "./main-page"
-export { default as PeoplePage } from "./people"
+export { default as YourPosts } from "./yourPosts";
+export { default as CreatePost } from "./createPost"
+export { default as EditPost } from "./editPost"
+export { default as MainPage } from "./mainPage"
+export { default as SearchPage } from "./searchPage"
