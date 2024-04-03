@@ -47,6 +47,16 @@ export interface User {
   bio: string
 }
 
+export interface UserToUpdate {
+  id: string
+  name: string
+  email: string
+  imageId: string
+  imageUrl: URL
+  file: File[]
+  bio: string
+}
+
 export interface Likes {
   postId: string
   likesArray: string[]

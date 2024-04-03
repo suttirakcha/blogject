@@ -17,3 +17,11 @@ export const postSchema = z.object({
   file: z.custom<File[]>(),
   tags: z.string()
 })
+
+export const userSchema = z.object({
+  name: z.string().min(1, { message: "Name cannot be empty"}),
+  email: z.string().min(1, { message: "Email cannot be empty"}),
+  file: z.custom<File[]>(),
+  bio: z.string().max(500),
+})
+

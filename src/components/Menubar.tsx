@@ -57,10 +57,12 @@ const LeftSidebar = () => {
 
       {isAuthenticated ? (
         <section className="flex flex-col gap-y-6">
-          <div className="flex items-center gap-x-4">
-            <AvatarAccount />
-            <h3 className="text-xl">{user.name}</h3>
-          </div>
+          <Link to="/update-user">
+            <div className="flex items-center gap-x-4">
+              <AvatarAccount />
+              <h3 className="text-xl">{user.name}</h3>
+            </div>
+          </Link>
           <MenuButton onClick={() => signOut()}>
             <LogOut />
             Log out

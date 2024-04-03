@@ -1,4 +1,4 @@
-import { NewUser, Post, PostToUpdate, SignIn, UserToDB } from '@/types/index'
+import { NewUser, Post, PostToUpdate, SignIn, UserToDB, UserToUpdate } from '@/types/index'
 import { account, appwriteConfig, avatars, databases, storage } from './appwrite'
 import { ID, Query } from 'appwrite'
 
@@ -332,6 +332,79 @@ export async function deletePost(postId: string, imageId: string){
       appwriteConfig.postsCollectionId,
       postId,
     )
+  } catch (err){
+    console.log(err)
+  }
+}
+
+export async function getUsers(num?: number){
+  const queries: any[] = [Query.orderDesc('$createdAt')]
+
+  if (num) queries.push(Query.limit(num))
+
+  try {
+    const users = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.usersCollectionId,
+      queries
+    )
+
+    if (!users) throw Error
+
+    return users
+
+  } catch (err){
+    console.log(err)
+  }
+}
+
+export async function updateUser(user: UserToUpdate){
+  const hasFileToUpdate = user?.file?.length > 0
+
+  try {
+    let image = {
+      imageUrl: user.imageUrl,
+      imageId: user.imageId
+    }
+
+    if (hasFileToUpdate){
+      const uploadedFile = await uploadFile(user.file[0])
+
+      if (!uploadedFile) throw Error
+
+      const fileUrl = getFilePreview(uploadedFile.$id)
+
+      if (!fileUrl) {
+        deleteFile(uploadedFile.$id)
+        throw Error
+      }
+
+      image = { ...image, imageUrl: fileUrl, imageId: uploadedFile.$id}
+
+      const updatedUser = await databases.updateDocument(
+        appwriteConfig.databaseId,
+        appwriteConfig.usersCollectionId,
+        user.id,
+        {
+          name: user.name,
+          imageUrl: image.imageUrl,
+          imageId: image.imageId,
+          bio: user.bio
+        }
+      )
+
+      if (!updatedUser){
+        if (hasFileToUpdate) await deleteFile(image.imageId)
+        throw Error
+      }
+
+      if (user.imageId && hasFileToUpdate) {
+        await deleteFile(user.imageId);
+      }
+
+      return updatedUser
+    }
+
   } catch (err){
     console.log(err)
   }
