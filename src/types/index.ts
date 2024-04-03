@@ -29,7 +29,7 @@ export interface PostToUpdate {
 
 export interface PostToDelete {
   postId: string
-  imageId: string
+  imageId?: string
 }
 
 export interface UserToDB {

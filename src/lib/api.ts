@@ -323,7 +323,7 @@ export async function updatePost(post: PostToUpdate){
   }
 }
 
-export async function deletePost(postId: string, imageId: string){
+export async function deletePost(postId: string, imageId?: string){
   if (!postId || !imageId) throw Error
 
   try {

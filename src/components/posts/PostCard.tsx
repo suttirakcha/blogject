@@ -14,6 +14,8 @@ import PostFooter from "./PostFooter"
 import { useUserContext } from "@/providers/auth-provider"
 import { Edit, Trash2 } from "lucide-react"
 import { Link } from "react-router-dom"
+import { useDeletePost } from "@/lib/react-query/queries-and-mutations"
+import { toast } from "../ui/use-toast"
 
 interface PostCardProps {
   post: Models.Document
@@ -21,10 +23,31 @@ interface PostCardProps {
 
 const PostCard = ({ post } : PostCardProps) => {
 
-  const { user } = useUserContext()
 
-  const handleDeletePost = (e: React.MouseEvent) => {
-    
+
+  const { user } = useUserContext()
+  const { mutateAsync: deletePost, isPending: isDeleting } = useDeletePost()
+
+  async function handleDeletePost(e: React.MouseEvent){
+    e.stopPropagation()
+
+    const deletedPost = await post.imageId ? deletePost({
+      postId: post.$id,
+      imageId: post.imageId
+    }) : deletePost({
+      postId: post.$id
+    })
+
+    if (!deletedPost){
+      toast({
+        title: 'There was an error deleting the post, please try again.',
+        variant: 'destructive'
+      })
+    } else {
+      toast({
+        title: 'Successfully deleted the post',
+      })
+    }
   }
 
   return (

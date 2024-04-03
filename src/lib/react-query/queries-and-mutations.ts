@@ -144,7 +144,7 @@ export const useDeletePost = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: ({ postId, imageId } : PostToDelete) => deletePost(postId, imageId),
+    mutationFn: ({ postId, imageId } : PostToDelete) => imageId ? deletePost(postId, imageId) : deletePost(postId),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_RECENT_POSTS]
