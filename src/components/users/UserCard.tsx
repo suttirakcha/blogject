@@ -16,7 +16,7 @@ const UserCard = () => {
   return (
     <div className="grid grid-cols-5 gap-x-3">
       {users?.documents?.map((user: any) => (
-        <Link to={`/profile/${user.accountId}`} className="w-full flex">
+        <Link to={`/profile/${user.$id}`} className="w-full flex">
           <Card className="w-full p-5 flex flex-col items-center gap-y-2">
             <CardTitle>
               <Avatar className="h-9 w-9">

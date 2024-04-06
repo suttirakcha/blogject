@@ -28,13 +28,10 @@ const PostCard = ({ post } : PostCardProps) => {
   const { user } = useUserContext()
   const { mutateAsync: deletePost, isPending: isDeleting } = useDeletePost()
 
-  async function handleDeletePost(e: React.MouseEvent){
+  function handleDeletePost(e: React.MouseEvent){
     e.stopPropagation()
 
-    const deletedPost = await post.imageId ? deletePost({
-      postId: post.$id,
-      imageId: post.imageId
-    }) : deletePost({
+    const deletedPost = deletePost({
       postId: post.$id
     })
 

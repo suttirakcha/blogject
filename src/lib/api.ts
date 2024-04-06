@@ -182,15 +182,19 @@ export function getFilePreview(fileId: string){
 }
 
 export async function getRecentPosts(){
-  const posts = await databases.listDocuments(
-    appwriteConfig.databaseId,
-    appwriteConfig.postsCollectionId,
-    [Query.orderDesc('$createdAt'), Query.limit(20)]
-  )
-
-  if (!posts) throw Error
-
-  return posts
+  try {
+    const posts = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.postsCollectionId,
+      [Query.orderDesc('$createdAt'), Query.limit(20)]
+    )
+  
+    if (!posts) throw Error
+  
+    return posts
+  } catch (err){
+    console.log(err)
+  }
 }
 
 export async function likePost(postId: string, likesArray: string[]){
@@ -323,8 +327,8 @@ export async function updatePost(post: PostToUpdate){
   }
 }
 
-export async function deletePost(postId: string, imageId?: string){
-  if (!postId || !imageId) throw Error
+export async function deletePost(postId: string){
+  if (!postId) throw Error
 
   try {
     await databases.deleteDocument(

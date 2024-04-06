@@ -1,7 +1,7 @@
 import Logo from "./logo"
 import { Link, useLocation } from "react-router-dom"
 import { Button } from "./ui/button"
-import { LogIn, LogOut, MonitorDown } from "lucide-react"
+import { LogIn, LogOut, MonitorDown, UserCog } from "lucide-react"
 import { useSignOutAccount } from "@/lib/react-query/queries-and-mutations"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
@@ -56,13 +56,17 @@ const LeftSidebar = () => {
       </section>
 
       {isAuthenticated ? (
-        <section className="flex flex-col gap-y-6">
-          <Link to="/update-user">
+        <section className="flex flex-col gap-y-2">
+          <Link to={`/profile/${user.id}`} className="mb-4">
             <div className="flex items-center gap-x-4">
               <AvatarAccount />
               <h3 className="text-xl">{user.name}</h3>
             </div>
           </Link>
+          <MenuButton onClick={() => navigate('/update-user')}>
+            <UserCog />
+            Update User
+          </MenuButton>
           <MenuButton onClick={() => signOut()}>
             <LogOut />
             Log out

@@ -11,10 +11,10 @@ const ProfilePage = () => {
 
   const { id } = useParams()
   const { data: users } = useGetUsers()
-  const user = users?.documents?.filter(d => d.accountId === id)[0]
+  const user = users?.documents?.filter(d => d.$id === id)[0]
   const { data: posts, isPending: isPostLoading } = useGetRecentPosts()
   
-  const userPosts = posts?.documents?.filter(post => post?.creator?.accountId === id)
+  const userPosts = posts?.documents?.filter(post => post?.creator?.$id === id)
 
   return (
     <>
@@ -41,7 +41,7 @@ const ProfilePage = () => {
               ))}
             </div>
           ) : (
-            <NoPosts />
+            <h1>There is no post on {user?.name}'s account.</h1>
           )}
         </>
       )}
