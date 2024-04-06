@@ -10,6 +10,12 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 const EditPost = () => {
   const { id } = useParams()
   const { data: post, isPending } = useGetPostById(id || '')
+  const { isAuthenticated } = useUserContext()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    !isAuthenticated && navigate('/log-in')
+  }, [])
 
   return (
     <>

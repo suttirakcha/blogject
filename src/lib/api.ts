@@ -358,6 +358,20 @@ export async function getUsers(num?: number){
   }
 }
 
+export async function getUserById(userId: string){
+  try {
+    const user = await databases.getDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.usersCollectionId,
+      userId
+    )
+
+    return user
+  } catch (err){
+    console.log(err)
+  }
+}
+
 export async function updateUser(user: UserToUpdate){
   const hasFileToUpdate = user?.file?.length > 0
 
@@ -380,30 +394,30 @@ export async function updateUser(user: UserToUpdate){
       }
 
       image = { ...image, imageUrl: fileUrl, imageId: uploadedFile.$id}
-
-      const updatedUser = await databases.updateDocument(
-        appwriteConfig.databaseId,
-        appwriteConfig.usersCollectionId,
-        user.id,
-        {
-          name: user.name,
-          imageUrl: image.imageUrl,
-          imageId: image.imageId,
-          bio: user.bio
-        }
-      )
-
-      if (!updatedUser){
-        if (hasFileToUpdate) await deleteFile(image.imageId)
-        throw Error
-      }
-
-      if (user.imageId && hasFileToUpdate) {
-        await deleteFile(user.imageId);
-      }
-
-      return updatedUser
     }
+
+    const updatedUser = await databases.updateDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.usersCollectionId,
+      user.id,
+      {
+        name: user.name,
+        imageUrl: image.imageUrl,
+        imageId: image.imageId,
+        bio: user.bio
+      }
+    )
+
+    if (!updatedUser){
+      if (hasFileToUpdate) await deleteFile(image.imageId)
+      throw Error
+    }
+
+    if (user.imageId && hasFileToUpdate) {
+      await deleteFile(user.imageId);
+    }
+
+    return updatedUser
 
   } catch (err){
     console.log(err)

@@ -11,36 +11,39 @@ import { userSchema } from "@/lib/validation"
 import FileUploader from "./FileUploader"
 import { Models } from "appwrite"
 import { useUserContext } from "@/providers/auth-provider"
-import { useCreatePost, useUpdatePost, useUpdateUser } from "@/lib/react-query/queries-and-mutations"
+import { useCreatePost, useGetCurrentUser, useGetUserById, useUpdatePost, useUpdateUser } from "@/lib/react-query/queries-and-mutations"
 
-interface UserFormProps {
-  user?: Models.Document
-}
-
-const UpdateUserForm = ({ user } : UserFormProps) => {
+const UpdateUserForm = () => {
 
   const { mutateAsync: updateUser, isPending: isUpdating } = useUpdateUser()
+  const { user, setUser } = useUserContext()
+  const { data: currentUser } = useGetUserById(user.id)
 
   const navigate = useNavigate()
 
   const form = useForm<z.infer<typeof userSchema>>({
     resolver: zodResolver(userSchema),
     defaultValues: {
-      name: user ? user?.name : "",
-      email: user ? user?.email : "",
-      bio: user ? user?.bio : "",
+      name: user.name,
+      email: user.email,
+      bio: user.bio || "",
       file: [],
     },
   })
 
-  const onSubmit = async (values: z.infer<typeof userSchema>) => {
-    if (user){
+  const onSubmit = async (value: z.infer<typeof userSchema>) => {
+    if (user && currentUser){
       const updatedUser = await updateUser({
-        ...values,
-        id: user.$id,
-        imageId: user?.imageId,
-        imageUrl: user?.imageUrl
+        id: currentUser.$id,
+        email: value.email,
+        name: value.name,
+        bio: value.bio,
+        file: value.file,
+        imageUrl: currentUser.imageUrl,
+        imageId: currentUser.imageId,
       })
+
+      console.log(updatedUser)
 
       if (!updatedUser){
         toast({
@@ -51,6 +54,13 @@ const UpdateUserForm = ({ user } : UserFormProps) => {
         toast({
           title: 'Successfully updated the user',
         })
+
+        setUser({
+          ...user,
+          name: updatedUser?.name,
+          bio: updatedUser?.bio,
+          imageUrl: updatedUser?.imageUrl,
+        });
         navigate(`/`)
       }
     }
