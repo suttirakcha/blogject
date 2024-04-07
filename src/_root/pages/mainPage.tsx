@@ -1,4 +1,4 @@
-import { useGetRecentPosts } from "@/lib/react-query/queries-and-mutations"
+import { useGetRecentPosts, useGetUsers } from "@/lib/react-query/queries-and-mutations"
 import { Models } from "appwrite"
 import Loading from "@/components/Loading"
 import TopHeader from "@/components/TopHeader"
@@ -8,6 +8,7 @@ import UserCard from "@/components/users/UserCard"
 
 const MainPage = () => {
   const { data: posts, isPending: isPostLoading } = useGetRecentPosts()
+  const { data: users } = useGetUsers()
 
   return (
     <>
@@ -18,7 +19,7 @@ const MainPage = () => {
           <div className="flex flex-col gap-y-3">
             <h1 className="text-xl font-bold">Recommended users</h1>
             
-            <UserCard />
+            <UserCard users={users?.documents}/>
           </div>
         )}
 

@@ -10,12 +10,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useGetUsers } from "@/lib/react-query/queries-and-mutations"
 import { Link } from "react-router-dom"
   
-const UserCard = () => {
-  const { data: users } = useGetUsers()
-
+const UserCard = ({ users } : { users: any }) => {
   return (
     <div className="grid grid-cols-5 gap-x-3">
-      {users?.documents?.map((user: any) => (
+      {users.map((user: any) => (
         <Link to={`/profile/${user.$id}`} className="w-full flex">
           <Card className="w-full p-5 flex flex-col items-center gap-y-2">
             <CardTitle>
