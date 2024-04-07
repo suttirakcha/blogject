@@ -28,7 +28,10 @@ const SavedPostsPage = () => {
               ))}
             </div>
           ) : (
-            <h1>No saved posts...</h1>
+            <div className="flex flex-col items-center gap-y-2">
+              <h1 className="text-3xl font-bold">No saved posts</h1>
+              <p>Your saved posts will appear here. Explore posts and save them.</p>
+            </div>
           )}
         </>
       )}

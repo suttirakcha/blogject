@@ -15,7 +15,7 @@ const MainPage = () => {
       <TopHeader title="Home Feed"/>
 
       <section className="flex flex-col gap-y-8">
-        {!isPostLoading && (
+        {!isPostLoading && users && (
           <div className="flex flex-col gap-y-3">
             <h1 className="text-xl font-bold">Recommended users</h1>
             
