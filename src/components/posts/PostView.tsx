@@ -25,33 +25,35 @@ const PostView = ({ post } : PostViewProps) => {
       <DialogTrigger>
         <PostCard post={post}/>
       </DialogTrigger>
-      <DialogContent className="w-3/4 max-w-6xl rounded-md">
         {isAuthenticated ? (
-          <DialogHeader className="flex flex-col md:flex-row gap-4 w-full text-left">
-            {post?.imageUrl && (
-              <img src={post?.imageUrl} className="rounded-md object-cover md:w-1/2"/>
-            )}
-            <div className="flex flex-col gap-y-2">
-              <DialogTitle>{post?.title}</DialogTitle>
-              <DialogDescription>
-                {post?.content}
-              </DialogDescription>
-            </div>
-          </DialogHeader>
+          <DialogContent className="w-3/4 max-w-6xl rounded-md">
+            <DialogHeader className="flex flex-col md:flex-row gap-4 w-full text-left">
+              {post?.imageUrl && (
+                <img src={post?.imageUrl} className="rounded-md object-cover md:w-1/2"/>
+              )}
+              <div className="flex flex-col gap-y-2">
+                <DialogTitle>{post?.title}</DialogTitle>
+                <DialogDescription>
+                  {post?.content}
+                </DialogDescription>
+              </div>
+            </DialogHeader>
+          </DialogContent>
         ) : (
-          <DialogHeader>
-            <DialogTitle className="text-xl font-bold text-center">To view the posts, please log in or sign up</DialogTitle>
-            <DialogDescription className="flex justify-center gap-x-4 !mt-4">
-              <Link to='/log-in'>
-                <Button className="text-base">Log in</Button>  
-              </Link>
-              <Link to='/sign-up'>
-                <Button className="text-base">Sign up</Button>  
-              </Link>   
-            </DialogDescription>
-          </DialogHeader>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle className="text-xl font-bold text-center">To view the posts, please log in or sign up</DialogTitle>
+              <DialogDescription className="flex justify-center gap-x-4 !mt-4">
+                <Link to='/log-in'>
+                  <Button className="text-base">Log in</Button>  
+                </Link>
+                <Link to='/sign-up'>
+                  <Button className="text-base">Sign up</Button>  
+                </Link>   
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
         )}
-      </DialogContent>
     </Dialog>
   )
 }
