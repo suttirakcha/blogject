@@ -10,6 +10,8 @@ import {
 import { Models } from "appwrite"
 import PostCard from "./PostCard"
 import { useUserContext } from "@/providers/auth-provider"
+import { Link } from "react-router-dom"
+import { Button } from "../ui/button"
 
 interface PostViewProps {
   post: Models.Document
@@ -23,22 +25,29 @@ const PostView = ({ post } : PostViewProps) => {
       <DialogTrigger>
         <PostCard post={post}/>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="w-3/4 max-w-6xl rounded-md">
         {isAuthenticated ? (
-          <DialogHeader>
+          <DialogHeader className="flex flex-col md:flex-row gap-4 w-full text-left">
             {post?.imageUrl && (
-              <img src={post?.imageUrl} className="rounded-md"/>
+              <img src={post?.imageUrl} className="rounded-md object-cover md:w-1/2"/>
             )}
-            <DialogTitle>{post?.title}</DialogTitle>
-            <DialogDescription>
-              {post?.content}
-            </DialogDescription>
+            <div className="flex flex-col gap-y-2">
+              <DialogTitle>{post?.title}</DialogTitle>
+              <DialogDescription>
+                {post?.content}
+              </DialogDescription>
+            </div>
           </DialogHeader>
         ) : (
           <DialogHeader>
-            <DialogTitle>To view the posts, please log in or register</DialogTitle>
-            <DialogDescription>
-              
+            <DialogTitle className="text-xl font-bold text-center">To view the posts, please log in or sign up</DialogTitle>
+            <DialogDescription className="flex justify-center gap-x-4 !mt-4">
+              <Link to='/log-in'>
+                <Button className="text-base">Log in</Button>  
+              </Link>
+              <Link to='/sign-up'>
+                <Button className="text-base">Sign up</Button>  
+              </Link>   
             </DialogDescription>
           </DialogHeader>
         )}

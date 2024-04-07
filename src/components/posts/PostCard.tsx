@@ -1,11 +1,20 @@
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Models } from "appwrite"
 import { Badge } from "@/components/ui/badge"
@@ -23,14 +32,10 @@ interface PostCardProps {
 
 const PostCard = ({ post } : PostCardProps) => {
 
-
-
   const { user } = useUserContext()
   const { mutateAsync: deletePost, isPending: isDeleting } = useDeletePost()
 
-  function handleDeletePost(e: React.MouseEvent){
-    e.stopPropagation()
-
+  function handleDeletePost(){
     const deletedPost = deletePost({
       postId: post.$id
     })
@@ -62,11 +67,24 @@ const PostCard = ({ post } : PostCardProps) => {
             </div>
           </div>
           {user.id === post?.creator?.$id ? (
-            <div className="flex items-center gap-x-4">
+            <div className="flex items-center gap-x-4" onClick={(e) => e.stopPropagation()}>
               <Link to={`/posts/${post.$id}`}>
                 <Edit className="h-5 w-5 stroke-indigo-500" />
               </Link>
-              <Trash2 className="h-5 w-5 stroke-red-500" onClick={handleDeletePost}/>
+              <AlertDialog>
+                <AlertDialogTrigger>
+                  <Trash2 className="h-5 w-5 stroke-red-500" />
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Delete this post: {post.title}? </AlertDialogTitle>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleDeletePost}>Delete</AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </div>
           ) : null}
         </CardTitle>
