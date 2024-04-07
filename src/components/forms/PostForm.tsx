@@ -31,7 +31,7 @@ const PostForm = ({ post, action } : PostFormProps) => {
     defaultValues: {
       title: post ? post?.title : "",
       content: post ? post?.content : "",
-      file: [],
+      file: post ? post?.file : [],
       tags: post ? post?.tags.join(',') : ''
     },
   })

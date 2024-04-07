@@ -1,6 +1,7 @@
 import { ImageUp, X } from 'lucide-react'
 import React, { useState, useCallback, useEffect } from 'react'
 import { FileWithPath, useDropzone } from 'react-dropzone'
+import { toast } from '@/components/ui/use-toast'
 
 interface FileUploaderProps {
   fieldChange: (FILES: File[]) => void
@@ -14,7 +15,14 @@ const FileUploader = ({ fieldChange, mediaUrl } : FileUploaderProps) => {
   const onDrop = useCallback((acceptedFiles: FileWithPath[]) => {
     setFile(acceptedFiles)
     fieldChange(acceptedFiles)
-    setFileUrl(URL.createObjectURL(acceptedFiles[0]))
+    if (acceptedFiles[0].size > 1024 * 512){
+      toast({
+        title: 'The maximum file size exceeds 512KB, please upload the image with the smaller file size.',
+        variant: 'destructive'
+      })
+    } else {
+      setFileUrl(URL.createObjectURL(acceptedFiles[0]))
+    }
   }, [file])
   const { getRootProps, getInputProps } = useDropzone({ 
     onDrop,
@@ -42,7 +50,7 @@ const FileUploader = ({ fieldChange, mediaUrl } : FileUploaderProps) => {
             <ImageUp className='w-16 h-16'/>
 
             <h3 className='text-xl font-bold'>Upload or drag photo here</h3>
-            <p>(Accept PNG, SVG, and JPG)</p>
+            <p className='text-center text-sm'>(Accept PNG, SVG, and JPG) <br/> Maximum file size: 512KB</p>
           </>
         )}
       </div>

@@ -10,9 +10,9 @@ const RootLayout = () => {
       <Topbar />
       <LeftSidebar />
 
-      <section className="mt-[100px] p-10 md:ml-[320px]">
+      <section className="mt-[100px] pb-[136px] p-10 md:pb-10 md:ml-[320px]">
   
-        <main className="max-w-3xl m-auto">
+        <main className="max-w-3xl m-auto md:pb-0">
           <Outlet />
         </main>
 

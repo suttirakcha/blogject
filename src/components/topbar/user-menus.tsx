@@ -11,7 +11,7 @@ import {
 import { useSignOutAccount } from "@/lib/react-query/queries-and-mutations"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { LogOut } from "lucide-react"
+import { LogOut, UserCog } from "lucide-react"
 import AvatarAccount from "../AvatarAccount"
 
 const UserMenus = () => {
@@ -32,6 +32,10 @@ const UserMenus = () => {
       <DropdownMenuContent>
         <DropdownMenuLabel>{user.name}</DropdownMenuLabel>
         <DropdownMenuSeparator />
+        <DropdownMenuItem onSelect={() => navigate('/update-user')}>
+          <UserCog className={iconClassName}/>
+          Update User
+        </DropdownMenuItem>
         <DropdownMenuItem onSelect={() => signOut()}>
           <LogOut className={iconClassName}/>
           Sign out
