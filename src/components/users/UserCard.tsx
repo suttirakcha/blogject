@@ -12,7 +12,7 @@ import { Link } from "react-router-dom"
   
 const UserCard = ({ users } : { users: any }) => {
   return (
-    <div className="grid grid-cols-5 gap-x-3">
+    <div className="grid grid-cols-3 lg:grid-cols-5 gap-x-3">
       {users?.map((user: any) => (
         <Link to={`/profile/${user.$id}`} className="w-full flex">
           <Card className="w-full p-5 flex flex-col items-center gap-y-2">
@@ -25,7 +25,7 @@ const UserCard = ({ users } : { users: any }) => {
             <CardDescription className="text-base text-white">{user.name}</CardDescription>
           </Card>
         </Link>
-      ))}
+      )).slice(0, 4)}
     </div>
   )
 }
